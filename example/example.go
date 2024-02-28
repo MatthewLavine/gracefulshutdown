@@ -26,9 +26,8 @@ func main() {
 	// Gracefully shut down the HTTP server.
 	gracefulshutdown.AddShutdownHandler(func() error {
 		log.Println("Shutting down HTTP server...")
-		httpServer.Shutdown(ctx)
-		log.Println("HTTP server shut down.")
-		return nil
+		defer log.Println("HTTP server shut down.")
+		return httpServer.Shutdown(ctx)
 	})
 
 	// Perform application specific cleanup before exiting.
